@@ -1,0 +1,194 @@
+# AuraOS Track
+# Beautiful Aesthetics Meets Powerful Dev Tools
+# Inherits from blendOS base and adds Hyprland + Aura environment
+
+repo: 'https://github.com/YOUR-USERNAME/auraos-track/raw/main'
+impl: 'https://github.com/blend-os/tracks/raw/main'
+track: 'blendos-base'
+
+# Custom package repositories
+package-repos:
+  - name: 'aura'
+    repo-url: 'https://aura-repo.cortexnest.icu/$arch'
+
+# System packages
+packages:
+  # Aura Meta Package (pulls aura-cli, aura-shell, hyprland, and core deps)
+  # See: https://github.com/CjLogic/Aura-Dots/blob/main/PKGBUILD
+  - aura-meta
+
+  # Additional Hyprland components (not in aura-meta)
+  - hyprland-guiutils
+  - hypridle
+  - hyprlock
+  - hyprsunset
+  - waybar
+  - swaybg
+  - swayosd
+  - mako
+  - wofi
+  - grim
+  - slurp
+  - satty
+  - imagemagick
+
+  # Display Protocols
+  - qt5-wayland
+  - qt6-wayland
+
+  # Audio
+  - pamixer
+  - playerctl
+  - pipewire
+  - pipewire-alsa
+  - pipewire-jack
+  - pipewire-pulse
+
+  # Networking
+  - iwd
+  - avahi
+  - nss-mdns
+  - networkmanager
+
+  # System Services
+  - sddm
+  - polkit-gnome
+  - hyprpolkitagent
+  - gnome-keyring
+  - libsecret
+  - power-profiles-daemon
+  - uwsm
+
+  # Shell & Terminal (ghostty instead of foot from aura-meta)
+  - ghostty
+
+  # System utilities (additional to aura-meta's eza, btop, jq, fastfetch, starship)
+  - bat
+  - dust
+  - fd
+  - fzf
+  - gum
+  - plocate
+  - ripgrep
+  - tldr
+  - tree-sitter-cli
+  - unzip
+  - whois
+  - zoxide
+  - inxi
+  - usage
+  - xmlstarlet
+  - bluetui
+  - stow
+
+  # Dev Tools - Version Managers
+  - mise
+
+  # Dev Tools - Containers
+  - docker
+  - docker-buildx
+  - docker-compose
+  - lazydocker
+
+  # Dev Tools - Git
+  - lazygit
+  - github-cli
+
+  # Dev Tools - Languages
+  - ruby
+  - rust
+  - clang
+  - llvm
+  - luarocks
+  - python-poetry-core
+
+  # Dev Tools - Databases
+  - postgresql-libs
+  - mariadb-libs
+
+  # Dev Tools - Editors
+  - micro
+
+  # Fonts (additional to aura-meta's ttf-jetbrains-mono-nerd)
+  - noto-fonts
+  - noto-fonts-cjk
+  - noto-fonts-emoji
+  - noto-fonts-extra
+  - ttf-cascadia-mono-nerd
+  - woff2-font-awesome
+  - fontconfig
+
+  # Themes & Icons (additional to aura-meta's papirus-icon-theme, adw-gtk-theme)
+  - gnome-themes-extra
+
+  # File Management
+  - nautilus
+  - gvfs-mtp
+  - gvfs-nfs
+  - gvfs-smb
+  - gnome-disk-utility
+  - exfatprogs
+  - ffmpegthumbnailer
+  - thunar
+
+  # Aura-CLI Dependencies (additional to what aura-meta pulls)
+  - libnotify
+  - swappy
+  - fuzzel
+  - glib2
+
+  # Aura-Shell Dependencies (additional to what aura-meta pulls)
+  - ddcutil
+  - cava
+  - lm_sensors
+  - aubio
+  - libpipewire
+  - qt6-declarative
+  - qt6-base
+  - libqalculate
+  - ninja
+
+  # Security
+  - ufw
+
+  # Boot & System
+  - plymouth
+  - brightnessctl
+
+  # Web & Media
+  - firefox
+
+  # System Libraries
+  - libyaml
+  - python-gobject
+  - bolt
+  - expac
+  - gst-plugin-pipewire
+  - gtk4-layer-shell
+  - webp-pixbuf-loader
+
+# Services to enable
+services:
+  - sddm
+  - NetworkManager
+  - docker
+  - avahi-daemon
+  - bluetooth
+  - ufw
+
+# Commands to run after installation
+commands:
+  # Install Aura-Dots (dotfiles are already installed to /usr/share/aura-dots by the package)
+  - 'sudo -u ${USER} aura-dots-install'
+
+  # Configure SDDM for Hyprland
+  - 'mkdir -p /etc/sddm.conf.d'
+  - 'echo "[Autologin]\nUser=${USER}\nSession=hyprland" > /etc/sddm.conf.d/autologin.conf'
+
+  # Add user to docker group
+  - 'usermod -aG docker ${USER}'
+
+  # Enable firewall with defaults
+  - 'ufw --force enable'
+  - 'ufw default deny incoming'
+  - 'ufw default allow outgoing'
