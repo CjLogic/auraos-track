@@ -2,7 +2,7 @@
 # Beautiful Aesthetics Meets Powerful Dev Tools
 # Inherits from blendOS base and adds Hyprland + Aura environment
 
-repo: 'https://github.com/YOUR-USERNAME/auraos-track/raw/main'
+repo: 'https://github.com/CjLogic/auraos-track/raw/main/auraos.yaml'
 impl: 'https://github.com/blend-os/tracks/raw/main'
 track: 'blendos-base'
 
